@@ -11,7 +11,7 @@ ReactDOM.render(
 );
 
 ReactDOM.render(
-  <h3>Please note only returns the Mystery Boxes with the name "Childhood Fantasy Mystery Box"</h3>,
+  <h3>Please note only returns the Mystery Boxes with the name "MOBOX Collectible MOMOs"</h3>,
   document.getElementById('subtitle')
 );
 
