@@ -16,9 +16,15 @@ ReactDOM.render(
 );
 
 ReactDOM.render(
+  <p>This is a very simple app, to use it you have to disable Cross-Origin Resource Sharing (CORS). <strong>Attention, after use it re-enables the CORS.</strong></p>,
+  document.getElementById('cors')
+);
+
+ReactDOM.render(
   <p>Credits by Gian Lu (@galese3) & Michael Fenne (@MicFenne) <strong>Send a donation: 0x18Ca610d13d7639678927B20455f2a57C46aE078</strong></p>,
   document.getElementById('credits')
 );
+
 
 //ReactDOM.render(<Table />, document.querySelector('#table'));
 

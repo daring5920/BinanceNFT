@@ -52,7 +52,7 @@ class App extends React.Component {
       },
       "referrer": "https://www.binance.com/en/nft/market",
       "referrerPolicy": "origin-when-cross-origin",
-      "body": "{\"category\":0,\"keyword\":\"Childhood Fantasy Mystery Box\",\"orderBy\":\"list_time\",\"orderType\":-1,\"page\":1,\"rows\":100}",
+      "body": "{\"category\":0,\"keyword\":\"MOBOX Collectible MOMOs\",\"orderBy\":\"list_time\",\"orderType\":-1,\"page\":1,\"rows\":100}",
       "method": "POST",
       "mode": "cors"
     })
