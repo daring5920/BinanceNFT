@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import {App} from './App';
+import {Core} from './Core';
 import reportWebVitals from './reportWebVitals';
 
 
@@ -11,7 +11,7 @@ ReactDOM.render(
 );
 
 ReactDOM.render(
-  <h3>Please note only returns the Mystery Boxes with the name "MOBOX Collectible MOMOs"</h3>,
+  <h3>Please note that it only returns Mystery Boxes from the most recent</h3>,
   document.getElementById('subtitle')
 );
 
@@ -25,10 +25,7 @@ ReactDOM.render(
   document.getElementById('credits')
 );
 
-
-//ReactDOM.render(<Table />, document.querySelector('#table'));
-
-ReactDOM.render(<App />, document.querySelector('#prova'));
+ReactDOM.render(<Core />, document.querySelector('#core'));
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
