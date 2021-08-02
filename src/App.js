@@ -1,7 +1,6 @@
 import React from 'react';
 import { DataGrid } from '@material-ui/data-grid';
 import Link from '@material-ui/core/Link';
-import axios from 'axios';
 
 export default function App(data) {
 
@@ -55,41 +54,7 @@ export default function App(data) {
       editable: false
     }
   ];
-
-  /*const newItem = []
-  if (data.data.numItems > 100 ) {
-    let totalItem = data.data.numItems - 100
-    let page = 2
-    let newBody = "{\"category\":0,\"keyword\":\"" + data.data.itemName + "\",\"orderBy\":\"list_time\",\"orderType\":-1,\"page\":" + page + ",\"rows\":100}"
-    do {
-      axios({
-        method: 'post',
-        url: 'https://www.binance.com/bapi/nft/v1/public/nft/product-list',
-        headers: {
-          "accept": "**",
-          "accept-language": "it-IT,it;q=0.9,en-US;q=0.8,en;q=0.7",
-          "clienttype": "web",
-          "content-type": "application/json",
-          "lang": "en"
-        },
-        data: newBody
-      })
-        .then((response) => {
-          newItem.setState.Push({
-            newItem: response.data.data.rows
-          });
-        })
-        .catch((error) => 
-        {
-          //
-        });
-
-        page ++ 
-        totalItem = totalItem -100
-        newBody = "{\"category\":0,\"keyword\":\"" + data.data.itemName + "\",\"orderBy\":\"list_time\",\"orderType\":-1,\"page\":" + page + ",\"rows\":100}"
-    } while (totalItem > 0)
-  }*/
-
+  
   const rows = data.data.items.map((row) => {
     const { productId, ...rest } = row;
     return { id: productId, ...rest };
