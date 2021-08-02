@@ -10,8 +10,10 @@ class Core extends React.Component {
     this.state = {
       showComponent: false,
       body: "",
+      page: 1,
       error: null,
       isLoaded: false,
+      coinsLoad : false,
       items: [],
       itemName: "",
       numItems: null,
@@ -19,11 +21,69 @@ class Core extends React.Component {
     };
     this.mySubmitHandler = this.mySubmitHandler.bind(this);
     this.myChangeHandler = this.myChangeHandler.bind(this);
+    this.loadData = this.loadData.bind(this);
+  }
+
+  async componentDidMount() {
+    await axios({
+      method: 'get',
+      url: 'https://api.coingecko.com/api/v3/simple/price?ids=ethereum%2Cbinancecoin&vs_currencies=usd'
+    })
+      .then((response) => {
+        this.setState({
+          coins: response,
+          coinsLoad: true
+        });
+      })
+      .catch((error) => 
+      {
+        this.setState({
+          error
+        });
+      });
+  }
+
+  async loadData(numItem) {
+    if (numItem > 100) {
+      axios({
+        method: 'post',
+        url: 'https://www.binance.com/bapi/nft/v1/public/nft/product-list',
+        headers: {
+          "accept": "*/*",
+          "accept-language": "it-IT,it;q=0.9,en-US;q=0.8,en;q=0.7",
+          "clienttype": "web",
+          "content-type": "application/json",
+          "lang": "en"
+        },
+        data: this.state.body
+      })
+      .then((response) => {
+        this.setState({
+          items: [ ...this.state.items, ...response.data.data.rows],
+          numItems: this.state.numItems - 100
+        });
+        if (this.state.numItems > 100) {
+          this.setState({
+              page: this.state.page+1
+          });
+          this.setState({
+            body: "{\"category\":0,\"keyword\":\"" + this.state.itemName + "\",\"orderBy\":\"list_time\",\"orderType\":-1,\"page\":" + this.state.page + ",\"rows\":100}"
+        });
+          this.loadData(this.state.numItems)
+        }
+      })
+      .catch((error) => 
+      {
+        this.setState({
+          error
+        });
+      });
+    }
   }
   
   mySubmitHandler = async (event) => {
     event.preventDefault();
-    axios({
+    await axios({
       method: 'post',
       url: 'https://www.binance.com/bapi/nft/v1/public/nft/product-list',
       headers: {
@@ -42,6 +102,16 @@ class Core extends React.Component {
           items: response.data.data.rows,
           numItems: response.data.data.total
         });
+        if (this.state.numItems > 100) {
+          this.setState({
+            page: this.state.page+1
+        });
+          this.setState({
+            body: "{\"category\":0,\"keyword\":\"" + this.state.itemName + "\",\"orderBy\":\"list_time\",\"orderType\":-1,\"page\":" + this.state.page + ",\"rows\":100}"
+        });
+          this.loadData(this.state.numItems)
+        }
+        this.componentDidMount()
       })
       .catch((error) => 
       {
@@ -51,26 +121,11 @@ class Core extends React.Component {
           error
         });
       });
-      axios({
-        method: 'get',
-        url: 'https://api.coingecko.com/api/v3/simple/price?ids=binancecoin%2Cethereum&vs_currencies=usd'
-      })
-        .then((response) => {
-          this.setState({
-            coins: response
-          });
-        })
-        .catch((error) => 
-        {
-          this.setState({
-            error
-          });
-        });
   }
   myChangeHandler = (event) => {
     this.setState({
-      body: "{\"category\":0,\"keyword\":\"" + event.target.value + "\",\"orderBy\":\"list_time\",\"orderType\":-1,\"page\":1,\"rows\":100}",
-      itemName: event.target.value
+      itemName: event.target.value,
+      body: "{\"category\":0,\"keyword\":\"" + event.target.value + "\",\"orderBy\":\"list_time\",\"orderType\":-1,\"page\":" + this.state.page + ",\"rows\":100}",
     });
   }
   render() {
